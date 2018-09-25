@@ -55,17 +55,19 @@ function open()
     MAX=00
     for file in `ls`
     do
-	echoDebug $file
-	n=${file:0:2}
-	is00_99 $n
-	if [ $? = 0 ]; then
-	    if [ $n -gt $MAX ] ; then 
-		MAX=$n
+	len=${#file}
+	if [ $len -gt 9 ]; then # 文件一般长度大于9 "00TODO.md"
+	    n=${file:0:2}
+	    is00_99 $n
+	    if [ $? = 0 ]; then
+		if [ $n -gt $MAX ] ; then 
+		    MAX=$n
+		fi
 	    fi
-	fi
-	if [ $1 = $n ]; then
-	    em $file
-	    return 0
+	    if [ $1 = $n ]; then
+		em $file
+		return 0
+	    fi
 	fi
     done
     MAX=`expr $MAX + 1`
@@ -93,18 +95,20 @@ function makeDone()
 {
     for file in `ls`
     do
-	echoDebug $file
-	n=${file:0:2}
-	if [ $1 = $n ]; then
-	    len=${#file}
-	    newName=${file:0:$len-7}
-	    stats=${file:$len-7:4}
-	    if [ x$stats = xDONE ]; then
-		echo "ERROR: ISSUE的状态已经是DONE"
-		return 1
+	len=${#file}
+	if [ $len -gt 9 ]; then
+	    n=${file:0:2}
+	    if [ $1 = $n ]; then
+		len=${#file}
+		newName=${file:0:$len-7}
+		stats=${file:$len-7:4}
+		if [ x$stats = xDONE ]; then
+		    echo "ERROR: ISSUE的状态已经是DONE"
+		    return 1
+		fi
+		mv $file ${newName}DONE.md
+		return 0
 	    fi
-	    mv $file ${newName}DONE.md
-	    return 0
 	fi
     done
     echo "ERROR: ISSUE的序号不存在"
@@ -154,8 +158,8 @@ function refresh()
     for file in `ls`
     do
 	len=${#file}
-	n=${file:0:2}
 	if [ $len -gt 9 ]; then
+	    n=${file:0:2}
 	    is00_99 $n
 	    if [ $? = 0 ]; then
 		mv $file $count${file:2}
