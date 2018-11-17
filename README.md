@@ -18,12 +18,17 @@ tidy-issue是一个shell脚本,用来管理个人ISSUE.结合markdown文件,它�
 
 ## Usage ##
 ```
-echo "Usage: thisscript [-d] 00-99"
-echo "       thisscript ARC | REF"
-echo "# 00-99 序号不存在时创建ISSUE并打开,存在时直接打开"
-echo "# -d 将指定序号的ISSUE设置为DONE状态"
-echo "# ARC 归档状态为DONE的ISSUE(月末归档至文件夹)"
-echo "# REF 刷新状态为TODO的ISSUE(月初重新分配序号)"
+# 参数说明
+function echoHelp()
+{
+    echo "Usage: thisscript thisscript [-d|-n] 00-99"
+    echo "       thisscript -a|-r"
+    echo "# 00-99 序号不存在时创建ISSUE并打开,存在时直接打开"
+    echo "# -d 将指定序号的ISSUE设置为DONE状态"
+    echo "# -a 归档状态为DONE的ISSUE(月末归档至文件夹)"
+    echo "# -r 刷新状态为TODO的ISSUE(月初重新分配序号)"
+    echo "# -n 重命名ISSUE"
+}
 ```
 
 ## Screenshots ##
