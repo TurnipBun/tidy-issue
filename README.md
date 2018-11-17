@@ -15,6 +15,7 @@ tidy-issue是一个shell脚本,用来管理个人ISSUE.结合markdown文件,它�
 2. 变更ISSUE状态为DONE
 3. 归档状态为DONE的ISSUE到文件夹(按月归档)
 4. 重新分配ISSUE的序号
+5. 重命名ISSUE
 
 ## Usage ##
 ```
